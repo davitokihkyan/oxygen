@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Cache;
 
 /**
@@ -35,6 +36,10 @@ class Patient extends Model
         'updated_at'
     ];
 
+    protected $appends = [
+        'name_w_count'
+    ];
+
     public static string $cacheKey = 'patients';
 
     /**
@@ -42,7 +47,21 @@ class Patient extends Model
      */
     protected static function booted(): void
     {
+        static::created(fn() => Cache::forget(self::$cacheKey));
         static::updated(fn() => Cache::forget(self::$cacheKey));
+        static::deleted(fn() => Cache::forget(self::$cacheKey));
+    }
+
+    /**
+     * @return string
+     */
+    public function getNameWCountAttribute(): string
+    {
+        if ($this->appointments_count) {
+            return $this->name . ' (' . $this->appointments_count . ')';
+        } else {
+            return $this->name;
+        }
     }
 
     /**
@@ -51,5 +70,13 @@ class Patient extends Model
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class, 'company_id');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function appointments(): HasMany
+    {
+        return $this->hasMany(Appointment::class, 'patient_id');
     }
 }

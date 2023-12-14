@@ -23,7 +23,6 @@
 
     const form = useForm({
         patient_id: '',
-        name: '',
         date: '',
         start_time: ''
     });
@@ -68,26 +67,12 @@
                                 <Select
                                     id="patient_id"
                                     class="mt-1 w-full bg-gray-50 border-gray-300 rounded-md shadow-sm"
-                                    label="name"
-                                    :options="props.patients"
-                                    :reduce="(option) => option.id"
                                     v-model="form.patient_id"
+                                    :optionKey="'name_w_count'"
+                                    :options="props.patients"
                                 />
 
                                 <InputError class="mt-2" :message="form.errors.patient_id" />
-                            </div>
-
-                            <div>
-                                <InputLabel for="name" value="Name" />
-
-                                <TextInput
-                                    id="name"
-                                    type="text"
-                                    class="mt-1 w-full"
-                                    v-model="form.name"
-                                />
-
-                                <InputError class="mt-2" :message="form.errors.name" />
                             </div>
                         </div>
 
@@ -106,10 +91,10 @@
                             </div>
 
                             <div>
-                                <InputLabel for="date" value="Start time" />
+                                <InputLabel for="start_time" value="Start time" />
 
                                 <Select
-                                    id="color"
+                                    id="start_time"
                                     class="mt-1 w-full"
                                     v-model="form.start_time"
                                     :options="times"

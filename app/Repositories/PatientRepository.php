@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\PatientInterface;
 use App\Models\Patient;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -25,12 +26,26 @@ class PatientRepository implements PatientInterface
     }
 
     /**
+     * @return Collection
+     */
+    public function getAllPatientsWithAppointmentsCount(): Collection
+    {
+        return Patient::query()
+            ->withCount(['appointments' => function (Builder $query) {
+                $query->where('date', '>', Carbon::now()->subMonths(2)->format('m/d/Y'));
+            }])
+            ->where('active', true)
+            ->get();
+    }
+
+    /**
      * @param Request $request
      * @return LengthAwarePaginator
      */
     public function getPatients(Request $request): LengthAwarePaginator
     {
         return Patient::query()
+            ->with('company')
             ->when($request->query('search'), function (Builder $query, string $search) {
                 $query->where(function($query) use ($search) {
                     $query->where('name', 'LIKE', '%' . $search . '%');

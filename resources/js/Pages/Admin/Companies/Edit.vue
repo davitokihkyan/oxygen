@@ -24,9 +24,9 @@
                         <NavLink :href="route('admin.companiesEdit', props.company.id)" :active="route().current('admin.companiesEdit')">
                             Basic
                         </NavLink>
-<!--                        <NavLink :href="route('admin.parkingOperatorsEditLocations', props.parkingOperator.id)" :active="route().current('admin.parkingOperatorsEditLocations')">-->
-<!--                            Locations-->
-<!--                        </NavLink>-->
+                        <NavLink :href="route('admin.companiesEditPatients', props.company.id)" :active="route().current('admin.companiesEditPatients')">
+                            Patients
+                        </NavLink>
                     </div>
 
                     <!-- Page Content -->

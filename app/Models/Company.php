@@ -39,7 +39,9 @@ class Company extends Model
      */
     protected static function booted(): void
     {
+        static::created(fn() => Cache::forget(self::$cacheKey));
         static::updated(fn() => Cache::forget(self::$cacheKey));
+        static::deleted(fn() => Cache::forget(self::$cacheKey));
     }
 
     /**

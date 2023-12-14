@@ -49,7 +49,7 @@ class CompanyController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param StoreCompanyRequest $request
      * @return RedirectResponse
      */
     public function store(StoreCompanyRequest $request): RedirectResponse
@@ -72,20 +72,20 @@ class CompanyController extends Controller
     }
 
     /**
-     * @param ParkingOperator $parkingOperator
+     * @param Company $company
      * @return Response
      */
-    public function editLocations(ParkingOperator $parkingOperator): Response
+    public function editPatients(Company $company): Response
     {
-        return Inertia::render('Admin/Companies/EditTabs/Locations', [
-            'parkingOperator'   => $parkingOperator,
-            'parkingLocations'  => $parkingOperator->parkingLocations()->paginate(25)
+        return Inertia::render('Admin/Companies/EditTabs/Patients', [
+            'company'   => $company,
+            'patients'  => $company->patients()->paginate(25)
         ]);
     }
 
     /**
-     * @param UpdateParkingOperatorRequest $request
-     * @param ParkingOperator $parkingOperator
+     * @param StoreCompanyRequest $request
+     * @param Company $company
      * @return RedirectResponse
      */
     public function update(StoreCompanyRequest $request, Company $company): RedirectResponse
@@ -97,7 +97,7 @@ class CompanyController extends Controller
     }
 
     /**
-     * @param ParkingOperator $parkingOperator
+     * @param Company $company
      * @return RedirectResponse
      */
     public function destroy(Company $company): RedirectResponse

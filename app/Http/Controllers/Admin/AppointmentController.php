@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -64,12 +65,12 @@ class AppointmentController extends Controller
     public function create(): Response
     {
         return Inertia::render('Admin/Appointments/Create', [
-            'patients'  => $this->patientRepository->getAllPatients()
+            'patients'  => $this->patientRepository->getAllPatientsWithAppointmentsCount()
         ]);
     }
 
     /**
-     * @param Request $request
+     * @param StoreAppointmentRequest $request
      * @return RedirectResponse
      */
     public function store(StoreAppointmentRequest $request): RedirectResponse
@@ -81,20 +82,19 @@ class AppointmentController extends Controller
     }
 
     /**
-     * @param Patient $patient
+     * @param Appointment $appointment
      * @return Response
      */
     public function edit(Appointment $appointment): Response
     {
         return Inertia::render('Admin/Appointments/Edit', [
-            'appointment'   => $appointment,
-            'patients'      => $this->patientRepository->getAllPatients()
+            'appointment'   => $appointment
         ]);
     }
 
     /**
-     * @param Request $request
-     * @param Patient $patient
+     * @param StoreAppointmentRequest $request
+     * @param Appointment $appointment
      * @return RedirectResponse
      */
     public function update(StoreAppointmentRequest $request, Appointment $appointment): RedirectResponse
@@ -106,7 +106,7 @@ class AppointmentController extends Controller
     }
 
     /**
-     * @param ParkingOperator $parkingOperator
+     * @param Appointment $appointment
      * @return RedirectResponse
      */
     public function destroy(Appointment $appointment): RedirectResponse
@@ -125,7 +125,7 @@ class AppointmentController extends Controller
     {
         $step = 15 * 60; // 15 minutes
         $start = 19800; // 05:30 AM
-        $end = 75600; // 09:00 PM
+        $end = 79200; // 10:00 PM
 
         // generate all available start times
         $availableStartTimes = [];

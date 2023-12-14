@@ -11,7 +11,6 @@
     import { ref, watch } from "vue";
     import { Head, useForm } from '@inertiajs/vue3';
     import VueTailwindDatepicker from "vue-tailwind-datepicker";
-    import NProgress from 'nprogress'
 
     const props = defineProps({
         appointment: Object,
@@ -24,35 +23,6 @@
     });
 
     const form = useForm(props.appointment);
-
-    const date = ref(props.appointment.date);
-    const startTime = ref(props.appointment.start_time);
-    const times = ref({});
-
-    watch(date, (dateValue) => {
-        if (dateValue.length > 0) {
-            form.date = dateValue;
-
-            loadAvailableStartTimes(dateValue)
-        }
-    });
-
-    watch(startTime, (startTimeValue) => {
-        form.start_time = startTimeValue;
-    });
-
-    const loadAvailableStartTimes = (date) => {
-        axios.post(route('admin.getAvailableStartTimes'), { date })
-            .then((response) => {
-                times.value = response.data;
-
-                startTime.value = form.start_time;
-            }).finally(() => {
-            NProgress.done();
-        });
-    }
-
-    loadAvailableStartTimes(date.value);
 
     const goBack = () => {
         window.location.href = route('admin.appointments')
@@ -78,30 +48,11 @@
                                 <Select
                                     id="patient_id"
                                     class="mt-1 w-full bg-gray-50 border-gray-300 rounded-md shadow-sm"
-                                    label="name"
-                                    :options="props.patients"
-                                    :reduce="(option) => option.id"
                                     v-model="form.patient_id"
+                                    :options="props.patients"
+                                    disabled
                                 />
-
-                                <InputError class="mt-2" :message="form.errors.patient_id" />
                             </div>
-
-                            <div>
-                                <InputLabel for="name" value="Name" />
-
-                                <TextInput
-                                    id="name"
-                                    type="text"
-                                    class="mt-1 w-full"
-                                    v-model="form.name"
-                                />
-
-                                <InputError class="mt-2" :message="form.errors.name" />
-                            </div>
-                        </div>
-
-                        <div class="grid gap-6 mb-6 md:grid-cols-2">
                             <div>
                                 <InputLabel for="date" value="Date" />
 
@@ -110,27 +61,37 @@
                                     v-model="date"
                                     :formatter="formatter"
                                     as-single
+                                    disabled
                                 />
-
-                                <InputError class="mt-2" :message="form.errors.date" />
                             </div>
+                        </div>
 
+                        <div class="grid gap-6 mb-6 md:grid-cols-2">
                             <div>
-                                <InputLabel for="date" value="Start time" />
+                                <InputLabel for="start_time" value="Start time" />
 
-                                <Select
-                                    id="color"
+                                <TextInput
+                                    id="start_time"
+                                    type="text"
                                     class="mt-1 w-full"
-                                    v-model="startTime"
-                                    :options="times"
+                                    v-model="form.start_time"
+                                    disabled
                                 />
+                            </div>
+                            <div>
+                                <InputLabel for="end_time" value="End time" />
 
-                                <InputError class="mt-2" :message="form.errors.start_time" />
+                                <TextInput
+                                    id="end_time"
+                                    type="text"
+                                    class="mt-1 w-full"
+                                    v-model="form.end_time"
+                                    disabled
+                                />
                             </div>
                         </div>
 
                         <div class="flex items-center gap-4">
-                            <PrimaryButton :disabled="form.processing">Update</PrimaryButton>
                             <SecondaryButton @click="goBack">Back</SecondaryButton>
                         </div>
                     </form>

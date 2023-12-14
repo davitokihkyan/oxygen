@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('appointments', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('patient_id')->unsigned();
-            $table->string('name')->nullable();
-            $table->decimal('price')->nullable();
             $table->string('date');
             $table->string('start_time');
             $table->string('end_time');

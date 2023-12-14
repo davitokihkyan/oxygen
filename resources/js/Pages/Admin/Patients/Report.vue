@@ -29,8 +29,8 @@
                         <table class="w-full text-sm text-left text-gray-500 ">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                                 <tr>
+                                    <th scope="col" class="px-6 py-3">Company</th>
                                     <th scope="col" class="px-6 py-3">Name</th>
-                                    <th scope="col" class="px-6 py-3">Email</th>
                                     <th scope="col" class="px-6 py-3">Phone Number</th>
                                     <th scope="col" class="px-6 py-3">Address</th>
                                     <th scope="col" class="px-6 py-3">Status</th>
@@ -39,11 +39,12 @@
                             </thead>
                             <tbody>
                                 <tr v-for="patient in props.patients.data" :key="patient.id" class="bg-white border-b hover:bg-gray-50">
-                                    <td class="px-6 py-4">
-                                        {{ patient.name }}
+                                    <td class="px-6 py-4 inline-flex gap-2">
+                                        {{ patient.company?.name }}
+                                        <div :style="{ 'background-color': patient.company?.color, 'width': '50px', 'height': '25px' }"></div>
                                     </td>
                                     <td class="px-6 py-4">
-                                        {{ patient.email }}
+                                        {{ patient.name }}
                                     </td>
                                     <td class="px-6 py-4">
                                         {{ patient.phone }}

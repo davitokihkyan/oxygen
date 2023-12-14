@@ -20,13 +20,10 @@ Route::prefix('admin')->middleware('auth')->group(function () {
         Route::get('/create', [CompanyController::class, 'create'])->name('admin.companiesCreate');
         Route::post('/', [CompanyController::class, 'store'])->name('admin.companiesStore');
         Route::get('/{company}/edit', [CompanyController::class, 'edit'])->name('admin.companiesEdit');
+        Route::get('/{company}/edit-patients', [CompanyController::class, 'editPatients'])->name('admin.companiesEditPatients');
         Route::put('/{company}', [CompanyController::class, 'update'])->name('admin.companiesUpdate');
         Route::delete('/{company}', [CompanyController::class, 'destroy'])->name('admin.companiesDestroy');
     });
-
-//    Route::prefix('parking-operators')->group(function () {
-//        Route::get('/{parking_operator}/edit-locations', [ParkingOperatorController::class, 'editLocations'])->name('admin.parkingOperatorsEditLocations');
-//    });
 
     /**
      * Patients

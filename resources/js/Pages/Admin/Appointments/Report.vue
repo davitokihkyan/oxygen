@@ -31,29 +31,22 @@
                         <table class="w-full text-sm text-left text-gray-500 ">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                                 <tr>
-                                    <th scope="col" class="px-6 py-3">#</th>
-                                    <th scope="col" class="px-6 py-3">Name</th>
                                     <th scope="col" class="px-6 py-3">Company</th>
                                     <th scope="col" class="px-6 py-3">Patient</th>
                                     <th scope="col" class="px-6 py-3">Patient Phone</th>
                                     <th scope="col" class="px-6 py-3">Patient Address</th>
                                     <th scope="col" class="px-6 py-3">Date</th>
                                     <th scope="col" class="px-6 py-3">Time</th>
-                                    <th scope="col" class="px-6 py-3">Status</th>
                                     <th scope="col" class="w-1 px-6 py-3">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="appointment in props.appointments.data" class="bg-white border-b hover:bg-gray-50">
-                                    <td class="px-6 py-4">
-                                        {{ appointment.id }}
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        {{ appointment.name }}
-                                    </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-6 py-4 inline-flex gap-2">
                                         {{ appointment.patient?.company?.name }}
+                                        <div :style="{ 'background-color': appointment.patient?.company?.color, 'width': '50px', 'height': '25px' }"></div>
                                     </td>
+
                                     <td class="px-6 py-4">
                                         {{ appointment.patient?.name }}
                                     </td>
@@ -68,9 +61,6 @@
                                     </td>
                                     <td class="px-6 py-4">
                                         {{ appointment.start_time }} - {{ appointment.end_time }}
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        {{ appointment.active ? 'Active' : 'Inactive' }}
                                     </td>
                                     <td class="px-6 py-4">
                                         <Link :href="route('admin.appointmentsEdit', { 'id': appointment.id })">

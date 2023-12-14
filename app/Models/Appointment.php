@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * @property string $id
  * @property string $patient_id
- * @property string $name
- * @property float $price
  * @property Carbon $date
  * @property Carbon $start_time
  * @property Carbon $end_time
@@ -29,8 +27,6 @@ class Appointment extends Model
 
     protected $fillable = [
         'patient_id',
-        'name',
-        'price',
         'date',
         'start_time',
         'end_time',

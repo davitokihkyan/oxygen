@@ -33,10 +33,8 @@
                 <Select
                     id="company_id"
                     class="mt-1 w-full bg-gray-50 border-gray-300 rounded-md shadow-sm"
-                    label="name"
-                    :options="props.companies"
-                    :reduce="(option) => option.id"
                     v-model="form.company_id"
+                    :options="props.companies"
                 />
 
                 <InputError class="mt-2" :message="form.errors.company_id" />
