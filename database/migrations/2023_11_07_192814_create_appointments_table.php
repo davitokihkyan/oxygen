@@ -14,11 +14,12 @@ return new class extends Migration
         Schema::create('appointments', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('patient_id')->unsigned();
-            $table->string('name');
-            $table->tinyInteger('status')->default(1)->comment('1: Active | 0: Inactive');
+            $table->string('name')->nullable();
+            $table->decimal('price')->nullable();
             $table->string('date');
             $table->string('start_time');
             $table->string('end_time');
+            $table->boolean('active')->default(1);
             $table->timestamps();
         });
 

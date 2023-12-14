@@ -1,13 +1,15 @@
 <script setup>
-import { ref } from 'vue';
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
-import Dropdown from '@/Components/Dropdown.vue';
-import DropdownLink from '@/Components/DropdownLink.vue';
-import NavLink from '@/Components/NavLink.vue';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import { Link } from '@inertiajs/vue3';
+    import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+    import Dropdown from '@js/Components/Dropdown.vue';
+    import DropdownLink from '@js/Components/DropdownLink.vue';
+    import NavLink from '@js/Components/NavLink.vue';
+    import ResponsiveNavLink from '@js/Components/ResponsiveNavLink.vue';
+    import Alert from '@js/Components/Alert.vue';
 
-const showingNavigationDropdown = ref(false);
+    import { ref } from 'vue';
+    import { Link } from '@inertiajs/vue3';
+
+    const showingNavigationDropdown = ref(false);
 </script>
 
 <template>
@@ -20,24 +22,28 @@ const showingNavigationDropdown = ref(false);
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
-                                <Link :href="route('dashboard')">
-                                    <ApplicationLogo
-                                        class="block h-9 w-auto fill-current text-gray-800"
-                                    />
+                                <Link :href="route('admin.companies')">
+                                    <ApplicationLogo class="block h-9 w-auto fill-current text-gray-800" />
                                 </Link>
                             </div>
 
                             <!-- Navigation Links -->
-                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <NavLink :href="route('admin.companies')" :active="route().current('admin.companies*')">
+                                    Companies
+                                </NavLink>
+                                <NavLink :href="route('admin.patients')" :active="route().current('admin.patients*')">
+                                    Patients
+                                </NavLink>
+                                <NavLink :href="route('admin.appointments')" :active="route().current('admin.appointments*')">
+                                    Appointments
                                 </NavLink>
                             </div>
                         </div>
 
-                        <div class="hidden sm:flex sm:items-center sm:ms-6">
+                        <div class="hidden sm:flex sm:items-center sm:ml-6">
                             <!-- Settings Dropdown -->
-                            <div class="ms-3 relative">
+                            <div class="ml-3 relative">
                                 <Dropdown align="right" width="48">
                                     <template #trigger>
                                         <span class="inline-flex rounded-md">
@@ -48,7 +54,7 @@ const showingNavigationDropdown = ref(false);
                                                 {{ $page.props.auth.user.name }}
 
                                                 <svg
-                                                    class="ms-2 -me-0.5 h-4 w-4"
+                                                    class="ml-2 -mr-0.5 h-4 w-4"
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     viewBox="0 0 20 20"
                                                     fill="currentColor"
@@ -64,17 +70,14 @@ const showingNavigationDropdown = ref(false);
                                     </template>
 
                                     <template #content>
-                                        <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
-                                        <DropdownLink :href="route('logout')" method="post" as="button">
-                                            Log Out
-                                        </DropdownLink>
+                                        <DropdownLink :href="route('logout')" method="post" as="button">Log Out</DropdownLink>
                                     </template>
                                 </Dropdown>
                             </div>
                         </div>
 
                         <!-- Hamburger -->
-                        <div class="-me-2 flex items-center sm:hidden">
+                        <div class="-mr-2 flex items-center sm:hidden">
                             <button
                                 @click="showingNavigationDropdown = !showingNavigationDropdown"
                                 class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
@@ -112,8 +115,14 @@ const showingNavigationDropdown = ref(false);
                     class="sm:hidden"
                 >
                     <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                            Dashboard
+                        <ResponsiveNavLink :href="route('admin.companies')" :active="route().current('admin.companies')">
+                            Companies
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('admin.patients')" :active="route().current('admin.patients')">
+                            Patients
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('admin.appointments')" :active="route().current('admin.appointments')">
+                            Appointments
                         </ResponsiveNavLink>
                     </div>
 
@@ -127,7 +136,6 @@ const showingNavigationDropdown = ref(false);
                         </div>
 
                         <div class="mt-3 space-y-1">
-                            <ResponsiveNavLink :href="route('profile.edit')"> Profile </ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('logout')" method="post" as="button">
                                 Log Out
                             </ResponsiveNavLink>
@@ -137,7 +145,7 @@ const showingNavigationDropdown = ref(false);
             </nav>
 
             <!-- Page Heading -->
-            <header class="bg-white shadow" v-if="$slots.header">
+            <header class="bg-white" v-if="$slots.header">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     <slot name="header" />
                 </div>
@@ -147,6 +155,12 @@ const showingNavigationDropdown = ref(false);
             <main>
                 <slot />
             </main>
+
+            <Alert :pageProps="$page.props" />
         </div>
     </div>
 </template>
+
+<style>
+    @import "@css/Admin/app.css";
+</style>

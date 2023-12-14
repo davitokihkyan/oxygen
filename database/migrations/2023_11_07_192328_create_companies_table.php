@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('color');
+            $table->string('color')->nullable();
+            $table->boolean('active')->default(1);
             $table->timestamps();
         });
     }
