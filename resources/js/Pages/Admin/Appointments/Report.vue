@@ -43,7 +43,7 @@
                             <tbody>
                                 <tr v-for="appointment in props.appointments.data" class="bg-white border-b hover:bg-gray-50">
                                     <td class="px-6 py-4 inline-flex gap-2">
-                                        {{ appointment.patient?.company?.name }}
+                                        <p class="w-56">{{ appointment.patient?.company?.name }}</p>
                                         <div :style="{ 'background-color': appointment.patient?.company?.color, 'width': '50px', 'height': '25px' }"></div>
                                     </td>
 
@@ -75,7 +75,8 @@
                             :links="props.appointments.links"
                             :from="props.appointments.from"
                             :to="props.appointments.to"
-                            :total="props.appointments.total" />
+                            :total="props.appointments.total"
+                        />
                     </div>
                 </div>
             </div>

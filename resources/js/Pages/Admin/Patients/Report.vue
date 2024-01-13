@@ -40,7 +40,7 @@
                             <tbody>
                                 <tr v-for="patient in props.patients.data" :key="patient.id" class="bg-white border-b hover:bg-gray-50">
                                     <td class="px-6 py-4 inline-flex gap-2">
-                                        {{ patient.company?.name }}
+                                        <p class="w-56">{{ patient.company?.name }}</p>
                                         <div :style="{ 'background-color': patient.company?.color, 'width': '50px', 'height': '25px' }"></div>
                                     </td>
                                     <td class="px-6 py-4">
@@ -68,7 +68,8 @@
                             :links="props.patients.links"
                             :from="props.patients.from"
                             :to="props.patients.to"
-                            :total="props.patients.total" />
+                            :total="props.patients.total"
+                        />
                     </div>
                 </div>
             </div>

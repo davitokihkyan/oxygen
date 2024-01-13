@@ -59,7 +59,8 @@
                             :links="props.companies.links"
                             :from="props.companies.from"
                             :to="props.companies.to"
-                            :total="props.companies.total" />
+                            :total="props.companies.total"
+                        />
                     </div>
                 </div>
             </div>
